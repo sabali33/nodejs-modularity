@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-starter",
+  "version": "1.0.0",
+  "description": "A simple container to bootstrap modular applications",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "modularity",
+    "serviceProvider"
+  ],
+  "author": "Eliasu Abraman",
+  "license": "ISC"
+}
