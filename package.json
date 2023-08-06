@@ -12,5 +12,7 @@
     "serviceProvider"
   ],
   "author": "Eliasu Abraman",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
 }

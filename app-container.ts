@@ -1,12 +1,11 @@
 import { ServiceProvider, ServicesType } from "./service-provider";
+import isCallable from "is-callable";
 
 export type AppContainerType = InstanceType<typeof AppContainer>;
 export type AppContainerTypeReadOnly = Readonly<
   InstanceType<typeof AppContainer>
 >;
-// export interface Ctor<T extends {new(...args:any[]):{}}>{
 
-// }
 export interface Ctor<C extends { new (...args: any[]): C }> {}
 
 class AppContainer {
@@ -47,13 +46,14 @@ class AppContainer {
     }
   }
   private initialize(): void {
-    this.providers.forEach((serviceProvider) => {
+    this.providers.forEach((serviceProvider: ServiceProvider) => {
       const instance = Object.freeze(AppContainer.instance);
       serviceProvider.init(instance);
     });
   }
   public get<I>(key: string) {
     const fn = AppContainer.instance.services[key];
+
     return fn() as I;
   }
   public singleton<T extends {}>(ctorClass: { new (): T }) {
@@ -67,6 +67,7 @@ class AppContainer {
     if (this.singletons[func.name]) {
       return this.singletons[func.name] as R;
     }
+
     this.singletons[func.name] = func();
     return this.singletons[func.name] as R;
   }
