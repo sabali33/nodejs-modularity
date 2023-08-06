@@ -1,5 +1,4 @@
 import { ServiceProvider, ServicesType } from "./service-provider";
-import isCallable from "is-callable";
 
 export type AppContainerType = InstanceType<typeof AppContainer>;
 export type AppContainerTypeReadOnly = Readonly<
@@ -29,9 +28,10 @@ class AppContainer {
 
     return AppContainer.instance;
   }
-  public boot() {
+  public async boot() {
     this.addServices();
-    this.initialize();
+    await this.initialize();
+
     return true;
   }
   private addServices() {
@@ -45,15 +45,22 @@ class AppContainer {
       AppContainer.instance.services[key] = services[key];
     }
   }
-  private initialize(): void {
-    this.providers.forEach((serviceProvider: ServiceProvider) => {
-      const instance = Object.freeze(AppContainer.instance);
-      serviceProvider.init(instance);
-    });
+  private async initialize(): Promise<void> {
+    try {
+      for (let index in this.providers) {
+        const serviceProvider: ServiceProvider = this.providers[index];
+        const instance = Object.freeze(AppContainer.instance);
+        await serviceProvider.init(instance);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
   public get<I>(key: string) {
     const fn = AppContainer.instance.services[key];
-
+    if (fn === undefined) {
+      throw new Error(`There is no service with key: ${key}`);
+    }
     return fn() as I;
   }
   public singleton<T extends {}>(ctorClass: { new (): T }) {

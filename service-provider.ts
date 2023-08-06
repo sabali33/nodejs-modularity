@@ -6,5 +6,5 @@ export interface ServiceProvider {
    * services
    */
   services: (container: AppContainerTypeReadOnly) => ServicesType;
-  init: (container: AppContainerTypeReadOnly) => boolean;
+  init: (container: AppContainerTypeReadOnly) => Promise<boolean>;
 }
