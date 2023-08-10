@@ -11,7 +11,7 @@ import { ServerServiceProvider } from "./src/server/ServerServiceProvider";
 async function App() {
   try {
     await AppContainer.new(
-      {},
+      {}, // Config variables goes here
       new RouterServiceProvider(),
       new ServerServiceProvider(),
       new EventsServiceProvider()
