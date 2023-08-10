@@ -2,6 +2,7 @@
 A simple library to make NodeJS applications modular
 
 # Usage
+`
 import AppContainer from "../app-container";
 import { EventsServiceProvider } from "./src/events-manager/events-service-provider";
 import { RouterServiceProvider } from "./src/router/RouterServicerProvider";
@@ -21,3 +22,4 @@ async function App() {
 }
 
 App();
+`
